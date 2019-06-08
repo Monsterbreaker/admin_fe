@@ -13,38 +13,59 @@ const _mm = new MMUtile();
 
 export default class Order{
     // 获取订单列表
-    getOrderList(listParam){
+    getUserList(listParam){
         if(listParam.listType == 'list'){
-            return _mm.request({
-                url     : _mm.getServerUrl('/manage/order/list.do'),
-                data    : {
-                    pageNum : listParam.pageNum || 1
-                }
-            });
+            if(listParam.searchType == 'customerName') {
+                return _mm.request({
+                    url     : _mm.getServerUrl('/admin/user/customer.do'),
+                    data    : {
+                        pageNum : listParam.pageNum || 1,
+                        username : '%'
+                    }
+                });
+            }else {
+                return _mm.request({
+                    url     : _mm.getServerUrl('/admin/user/seller.do'),
+                    data    : {
+                        pageNum : listParam.pageNum || 1,
+                        username : '%'
+                    }
+                });
+            }
         }
         else if(listParam.listType == 'search'){
-            return _mm.request({
-                url     : _mm.getServerUrl('/manage/order/search.do'),
-                data    : listParam
-            });
+            if(listParam.searchType == 'customerName') {
+                return _mm.request({
+                    url     : _mm.getServerUrl('/admin/user/customer.do'),
+                    data    : listParam
+                });
+            }else {
+                return _mm.request({
+                    url     : _mm.getServerUrl('/admin/user/seller.do'),
+                    data    : listParam
+                });
+            }
         } 
     }
-    // 获取订单详情
-    getOrderDetail(orderNo){
-        return _mm.request({
-            url     : _mm.getServerUrl('/manage/order/detail.do'),
-            data    : {
-                orderNo : orderNo || 0
-            }
-        });
-    }
-    // 发货
-    sendGoods(orderNo){
-        return _mm.request({
-            url     : _mm.getServerUrl('/manage/order/send_goods.do'),
-            data    : {
-                orderNo : orderNo || 0
-            }
-        });
+    // 改变用户状态
+    setUserStatus(userId, status){
+        if(status == 1) {
+            return _mm.request({
+                url     : _mm.getServerUrl('/admin/user/freeze'),
+                data    : {
+                    userId      : userId,
+                },
+                method  : 'POST'
+            });
+        }else {
+            return _mm.request({
+                url     : _mm.getServerUrl('/admin/user/thaw'),
+                data    : {
+                    userId      : userId,
+                },
+                method  : 'POST'
+            });
+        }
+        
     }
 }
