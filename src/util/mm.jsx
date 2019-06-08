@@ -11,7 +11,7 @@ const conf = {
     // online
     // serverHost: 'http://admin.happymmall.com'
     // dev
-    serverHost: '',
+    serverHost: 'http://localhost:8080',
     imageHost: 'http://img.happymmall.com/',
 }
 
@@ -26,11 +26,11 @@ class MMUtil{
                 data       : param.data     || null,
                 success    : res => {
                     // 数据成功
-                    if(0 === res.status){
+                    if(0 === res.code){
                         typeof resolve === 'function' && resolve(res.data || res.msg);
                     }
                     // 没登录状态, 且强制登录, 自动跳转到登录页
-                    else if(res.status === 10){
+                    else if(res.code === 10){
                         this.doLogin();
                     }
                     // 其他状态，调用error
