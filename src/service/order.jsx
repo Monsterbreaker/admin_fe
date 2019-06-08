@@ -68,4 +68,18 @@ export default class Order{
         }
         
     }
+    // 周成交量
+    turnoverWeek(){
+        return _mm.request({
+            url     : _mm.getServerUrl('/admin/order/turnover/week.do'),
+            method:'GET',
+        });
+    }
+    // 月成交量
+    turnoverMonth(){
+        return _mm.request({
+            url     : _mm.getServerUrl('/admin/order/turnover/month.do'),
+            method:'GET',
+        });
+    }
 }

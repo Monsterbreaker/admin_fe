@@ -98,7 +98,7 @@ var config = {
 
 // 开发环境下，使用devServer热加载
 if(WEBPACK_ENV === 'dev'){
-    config.entry.app.push('webpack-dev-server/client?http://localhost:8086');
+    config.entry.app.push('webpack-dev-server/client?http://localhost:8087');
 }
 
 module.exports = config;
